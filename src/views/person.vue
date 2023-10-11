@@ -32,7 +32,7 @@
     </div>
   </el-card>
 </template>
-  <script setup>
+<script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user";

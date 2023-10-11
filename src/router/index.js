@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import {useUserStore} from '../stores/user'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,6 +59,16 @@ const router = createRouter({
           name: 'person',
           component: import("../views/person.vue"),
         },
+        {
+          path: '/update',
+          name: 'update',
+          component: import("../views/updatepassword.vue"),
+        },
+        {
+          path: '/learn',
+          name: 'learn',
+          component: import("../views/learn.vue"),
+        },
       ]
     },
     {
@@ -69,5 +79,17 @@ const router = createRouter({
 
 
   ]
+})
+router.beforeEach((to, from, next) => {
+  // 获取缓存的数据
+  const store = useUserStore()
+  const user = store.user
+  const haveUser = user && user.id
+  const noPermissionPahths = ['/login']
+  if (!haveUser && !noPermissionPahths.includes(to.path)) {//用户没有登录
+    next('/login')
+  } else {
+    next()
+  }
 })
 export default router

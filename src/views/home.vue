@@ -18,7 +18,7 @@
         <div>学习资料共享</div>
         <div>学习资料共享</div>
       </li>
-      <li @click="this.$router.push('/recode')">
+      <li @click="this.$router.push('/learn')">
         <div>打卡学习区</div>
         <div>打卡学习区</div>
       </li>
@@ -38,12 +38,22 @@
         <div>成员管理</div>
         <div>成员管理</div>
       </li>
-      <div style="margin-left:200px">
-        <el-avatar 
-          
-        />
-      </div>
-      <div>{{  }}</div>
+      <div style="margin-left: 30px;position: relative;top:6x;">
+          <el-dropdown >
+            <el-avatar
+                :src="store.user.avatar"
+              />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="this.$router.push('/update')">修改密码</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
+      <div style="margin-left:20px;margin-top:10px;font-weight: bolder;font-size: 20px;color:rgb(31, 100, 100)">{{ store.user.name }}</div>
     </ul>
   </div>
   <div>
@@ -54,7 +64,11 @@
 import { useUserStore } from "../stores/user";
 import request from "../utils/request";
 const store=useUserStore()
-
+const logout = () => {
+  localStorage.removeItem("user");
+  window.location.reload();
+  
+};
 </script>
 <style scoped>
 .top {
